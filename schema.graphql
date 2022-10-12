@@ -1,0 +1,26 @@
+# We will br creating this entity after a succesful call to Initialize Auction
+# Have Added a new boolean to help us diffrentiate whether the auction is active or finished
+type Auction @entity {
+    id: ID!
+    nftSeller: Bytes! # address
+    nftAddress: Bytes! # address
+    tokenId: BigInt!
+    price: BigInt!
+    currentPrice: BigInt!
+    interval: BigInt!
+    active : Boolean!
+}
+
+# We will br creating this entity after a succesful call to MakeBid
+# When a new bid is made we will also update the current price(Highest Bid) of the related nft Auction
+
+type Bid @entity {
+    id: ID!
+    nftAddress: Bytes! # address
+    tokenId: BigInt!
+    price: BigInt!
+    bidMaker: Bytes!
+}
+
+
+

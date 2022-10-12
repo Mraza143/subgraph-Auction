@@ -1,0 +1,36 @@
+specVersion: 0.0.4
+schema:
+  file: ./schema.graphql
+dataSources:
+  - kind: ethereum
+    name: Auction
+    network: goerli
+    source:
+      address: "0x1Ddb1adc825ea01Ef4Fd84f320951468b268D010"
+      abi: Auction
+      startBlock: 7726525
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.6
+      language: wasm/assemblyscript
+      entities:
+        - AuctionInitialized
+        - BidMade
+        - ReceiveWinningBidAfterAuction
+        - WinNftAfterAuction
+        - WithdrawNftAfterAuctionUnsuccesful
+      abis:
+        - name: Auction
+          file: ./abis/Auction.json
+      eventHandlers:
+        - event: AuctionInitialized(indexed address,indexed uint256,indexed address,uint256,uint32)
+          handler: handleAuctionInitialized
+        - event: BidMade(indexed address,indexed uint256,indexed address,uint256)
+          handler: handleBidMade
+        - event: ReceiveWinningBidAfterAuction(indexed address,indexed uint256,indexed address,uint256)
+          handler: handleReceiveWinningBidAfterAuction
+        - event: WinNftAfterAuction(indexed address,indexed uint256,indexed address,uint256)
+          handler: handleWinNftAfterAuction
+        - event: WithdrawNftAfterAuctionUnsuccesful(indexed address,indexed uint256,indexed address)
+          handler: handleWithdrawNftAfterAuctionUnsuccesful
+      file: ./src/auction.ts
